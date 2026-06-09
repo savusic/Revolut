@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>SEC0 Chart</title>
 
+  <!-- Wichtig für Mobile Darstellung -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -16,73 +17,41 @@
     }
 
     h1 {
-      font-size: 18px;
       padding: 10px;
-    }
-
-    .controls {
-      margin: 10px;
-    }
-
-    button {
-      margin: 5px;
-      padding: 8px 12px;
-      border: none;
-      border-radius: 8px;
-      background-color: #1f2937;
-      color: white;
-      font-size: 14px;
+      font-size: 18px;
     }
 
     .chart-container {
       width: 100%;
-      height: 75vh;
+      height: 80vh; /* passt sich an Handyhöhe an */
     }
   </style>
 </head>
 
 <body>
 
-<h1>SEC0 – Chart</h1>
+  <h1>SEC0 – Semiconductor ETF Chart</h1>
 
-<div class="controls">
-  <button onclick="changeInterval('D')">1 Tag</button>
-  <button onclick="changeInterval('60')">1 Stunde</button>
-  <button onclick="changeInterval('15')">15 Min</button>
-</div>
+  <div class="chart-container" id="tradingview_chart"></div>
 
-<div id="tradingview_chart" class="chart-container"></div>
+  <!-- TradingView Script -->
+  <script src="https://s3.tradingview.com/tv.js"></script>
 
-<!-- ✅ WICHTIG: Script richtig einbinden -->
-<script src="https://s3.tradingview.com/tv.js"></script>
-
-<script>
-  let savedInterval = localStorage.getItem("interval") || "D";
-
-  function createChart(interval) {
-    document.getElementById("tradingview_chart").innerHTML = "";
-
+  <script>
     new TradingView.widget({
-      autosize: true,
-      symbol: "SWB:SEC0",
-      interval: interval,
-      timezone: "Europe/Berlin",
-      theme: "dark",
-      style: "1",
-      locale: "de",
-      toolbar_bg: "#0e1117",
-      enable_publishing: false,
-      container_id: "tradingview_chart"
+      "autosize": true,
+      "symbol": "SWB:SEC0",
+      "interval": "D",
+      "timezone": "Europe/Berlin",
+      "theme": "light",
+      "style": "1",
+      "locale": "de",
+      "toolbar_bg": "#0e1117",
+      "enable_publishing": false,
+      "hide_side_toolbar": false,
+      "container_id": "tradingview_chart"
     });
-  }
-
-  function changeInterval(interval) {
-    localStorage.setItem("interval", interval);
-    createChart(interval);
-  }
-
-  createChart(savedInterval);
-</script>
+  </script>
 
 </body>
 </html>
